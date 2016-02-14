@@ -19,6 +19,20 @@
   margin-left: 70px;
 }
 
+.searchEngine {
+  font-size: 12px;
+  line-height: 2.25;
+  color: black;
+  left: 0;
+  top: 0;
+}
+
+.urlbar {
+  display: flex;
+  flex: 1;
+  max-width: calc(~'100% - 72px');
+}
+
 #navigator {
   font-size: 20px;
   height: 34px;
@@ -57,8 +71,14 @@
       }
       */
     }
+
     .startButtons, .endButtons {
       visibility: hidden;
+    }
+
+    // todo: fade this one
+    .endButtons {
+      opacity: 1;
     }
 
     .urlbarIcon {
@@ -100,7 +120,6 @@
 
   form {
     flex: 1;
-    max-width: calc(~'100% - 72px');
     position: relative;
     text-align: center;
   }
@@ -139,6 +158,7 @@
 
   span.navbutton.remove-bookmark-button {
     color: @braveOrange;
+    opacity: 1;
   }
 
   &:not(.bookmarked) .remove-bookmark-button,

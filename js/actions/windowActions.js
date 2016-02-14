@@ -532,6 +532,18 @@ const WindowActions = {
   },
 
   /**
+   * Selects a search engine to use for URL bar
+   *
+   * @param {string} engine - Search URL to use
+   */
+  setSearchEngineSelected: function (engine) {
+    WindowDispatcher.dispatch({
+      actionType: WindowConstants.WINDOW_SET_SEARCH_ENGINE_ACTIVE,
+      engine
+    })
+  },
+
+  /**
    * Dispatches a message to the store to indicate that the pending frame shortcut info should be updated.
    *
    * @param {string} activeShortcut - The text for the new shortcut. Usually this is null to clear info which was previously

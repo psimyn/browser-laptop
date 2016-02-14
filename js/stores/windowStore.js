@@ -337,6 +337,9 @@ const doAction = (action) => {
         windowState = windowState.setIn(activeFrameStatePath().concat(['navbar', 'urlbar', 'searchSuggestions']), action.forSearchMode)
       }
       break
+    case WindowConstants.WINDOW_SET_SEARCH_ENGINE_ACTIVE:
+      windowState = windowState.setIn(activeFrameStatePath().concat(['navbar', 'urlbar', 'searchEngine']), action.engine)
+      break
     case WindowConstants.WINDOW_SET_ACTIVE_FRAME_SHORTCUT:
       windowState = windowState.mergeIn(activeFrameStatePath(), {
         activeShortcut: action.activeShortcut

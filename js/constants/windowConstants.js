@@ -33,6 +33,7 @@ const windowConstants = {
   WINDOW_SET_FRAME_TITLE: _,
   WINDOW_SET_LOCATION: _, // sets location of a frame
   WINDOW_SET_URL_BAR_ACTIVE: _, // whether the URL bar is being typed in
+  WINDOW_SET_SEARCH_ENGINE_ACTIVE: _,
   WINDOW_UNDO_CLOSED_FRAME: _,
   WINDOW_SET_ACTIVE_FRAME_SHORTCUT: _,
   WINDOW_SET_URL_BAR_SELECTED: _,

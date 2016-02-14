@@ -64,8 +64,27 @@ class UrlBar extends ImmutableComponent {
 
   onKeyDown (e) {
     switch (e.keyCode) {
+      case KeyCodes.BACKSPACE:
+        if (!this.props.urlbar.get('location')) {
+          WindowActions.setSearchEngineSelected(null)
+        }
+        break
+      case KeyCodes.TAB:
+        e.preventDefault()
+        const searchEngines = {
+          'google.com': 'Google',
+          'duckduckgo.com': 'DuckDuckGo'
+        }
+        let engine = this.props.urlbar.get('location')
+        if (searchEngines[engine]) {
+          WindowActions.setSearchEngineSelected(searchEngines[engine])
+          // single space prevents urlBarSuggestions, and placeholder from input
+          WindowActions.setNavBarUserInput(' ')
+        }
+        break
       case KeyCodes.ENTER:
         e.preventDefault()
+        WindowActions.setSearchEngineSelected(null)
         let location = this.props.urlbar.get('location')
         if (location === null || location.length === 0) {
           this.restore()
@@ -232,32 +251,43 @@ class UrlBar extends ImmutableComponent {
   }
 
   get shouldRenderUrlBarSuggestions () {
-    return (this.props.urlbar.get('location') || this.props.urlbar.get('urlPreview')) &&
-      this.props.urlbar.get('active')
+    return true
   }
 
   render () {
-    return <form
-      action='#'
-      id='urlbar'
-      ref='urlbar'>
+    // todo: do this consistently with rest of file
+    const searchWith = this.props.urlbar.get('searchEngine')
+    const searchEngine = searchWith && !this.props.titleMode
+      ? <span className={cx({
+        searchEngine: true
+      })}>Search with {searchWith}</span>
+      : null
+
+    return <div className={cx({
+      urlbar: true
+    })}>
+      { searchEngine }
+      <form
+        action='#'
+        id='urlbar'
+        ref='urlbar'>
         <div id='titleBarWrapper'>
-        <span
-          onClick={this.onSiteInfo}
-          className={cx({
-            urlbarIcon: true,
-            'fa': true,
-            'fa-lock': this.isHTTPPage && this.secure && !this.props.urlbar.get('active'),
-            'fa-unlock': this.isHTTPPage && !this.secure && !this.props.urlbar.get('active') && !this.props.titleMode,
-            'fa fa-search': this.props.searchSuggestions && this.props.urlbar.get('focused') && this.props.loading === false,
-            'fa fa-file-o': !this.props.searchSuggestions && this.props.urlbar.get('focused') && this.props.loading === false,
-            extendedValidation: this.extendedValidationSSL
-          })}/>
-        <div id='titleBar'>
-          <span><strong>{this.hostValue}</strong></span>
-          <span>{this.hostValue && this.titleValue ? ' | ' : ''}</span>
-          <span>{this.titleValue}</span>
-        </div>
+          <span
+            onClick={this.onSiteInfo}
+            className={cx({
+              urlbarIcon: true,
+              'fa': true,
+              'fa-lock': this.isHTTPPage && this.secure && !this.props.urlbar.get('active'),
+              'fa-unlock': this.isHTTPPage && !this.secure && !this.props.urlbar.get('active') && !this.props.titleMode,
+              'fa fa-search': this.props.searchSuggestions && this.props.urlbar.get('focused') && this.props.loading === false,
+              'fa fa-file-o': !this.props.searchSuggestions && this.props.urlbar.get('focused') && this.props.loading === false,
+              extendedValidation: this.extendedValidationSSL
+            })}/>
+          <div id='titleBar'>
+            <span><strong>{this.hostValue}</strong></span>
+            <span>{this.hostValue && this.titleValue ? ' | ' : ''}</span>
+            <span>{this.titleValue}</span>
+          </div>
         </div>
       <input type='text'
         disabled={this.props.activeFrameProps.get('location') === undefined && this.loadTime === ''}
@@ -293,6 +323,7 @@ class UrlBar extends ImmutableComponent {
           urlPreview={this.props.urlbar.get('urlPreview')}
           previewActiveIndex={this.props.previewActiveIndex || 0} /> : null }
       </form>
+    </div>
   }
 }
 

@@ -137,6 +137,7 @@ WindowStore
     navbar: {
       focused: boolean, // whether the navbar is focused
       urlbar: {
+        searchEngine: string, // selected search engine, if any
         location: string, // the string displayed in the urlbar
         urlPreview: string,
         searchSuggestions: boolean, // true if search suggestions are enabled

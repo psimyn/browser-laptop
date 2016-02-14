@@ -363,6 +363,16 @@ Marks the URL bar as active or not
 
 
 
+### setSearchEngineSelected(engine) 
+
+Selects a search engine to use for URL bar
+
+**Parameters**
+
+**engine**: `string`, Search URL to use
+
+
+
 ### setActiveFrameShortcut(activeShortcut) 
 
 Dispatches a message to the store to indicate that the pending frame shortcut info should be updated.
