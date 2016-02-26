@@ -13,6 +13,7 @@ const settings = {
   PAINT_TABS: 'tabs.paint-tabs',
   TABS_PER_TAB_PAGE: 'tabs.tabs-per-tab-page',
   SHOW_TAB_PREVIEWS: 'tabs.show-tab-previews',
+  NEW_TAB_POSITION: 'tabs.new-tab-position',
   // Privacy Tab
   HISTORY_SUGGESTIONS: 'privacy.history-suggestions',
   BOOKMARK_SUGGESTIONS: 'privacy.bookmark-suggestions',
@@ -26,4 +27,3 @@ const settings = {
 }
 
 module.exports = settings
-

@@ -31,8 +31,11 @@
 <paintTabs "Show tabs in page theme color">
 <tabsPerTabPage "Tabs per tab page">
 <showTabPreviews "Show tab previews on hover">
+<openNewTab "Open new tabs">
+<toTheRight "to the right">
+<atTheEnd "at the end">
 
-/* Prviacy settings page */
+/* Privacy settings page */
 <suggestionTypes "When using the location bar, suggest:">
 <history "History">
 <bookmarks "Bookmarks">

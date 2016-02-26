@@ -206,6 +206,9 @@ const doAction = (action) => {
       } else if (action.frameOpts.isPartitioned) {
         nextPartitionNumber = incrementPartitionNumber()
       }
+      if (!action.frameOpts.parentFrameKey && getSetting(settings.NEW_TAB_POSITION) === 'right') {
+        action.frameOpts.parentFrameKey = windowState.get('activeFrameKey')
+      }
       windowState = windowState.merge(FrameStateUtil.addFrame(windowState.get('frames'), action.frameOpts,
         nextKey, nextPartitionNumber, action.openInForeground ? nextKey : windowState.get('activeFrameKey')))
       if (action.openInForeground) {

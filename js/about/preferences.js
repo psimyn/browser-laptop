@@ -110,6 +110,13 @@ class SearchTab extends ImmutableComponent {
 class TabsTab extends ImmutableComponent {
   render () {
     return <SettingsList>
+      <SettingItem dataL10nId='openNewTab'>
+        <select value={getSetting(this.props.settings, settings.NEW_TAB_POSITION)}
+          onChange={changeSetting.bind(null, settings.NEW_TAB_POSITION)} >
+          <option data-l10n-id='toTheRight' value='right'/>
+          <option data-l10n-id='atTheEnd' value='end'/>
+        </select>
+      </SettingItem>
       <SettingItem dataL10nId='tabsPerTabPage'>
         <input
           type='number'
