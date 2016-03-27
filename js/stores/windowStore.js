@@ -227,8 +227,11 @@ const doAction = (action) => {
       } else if (action.frameOpts.isPartitioned) {
         nextPartitionNumber = incrementPartitionNumber()
       }
+      if (!action.frameOpts.parentFrameKey && getSetting(settings.NEW_TAB_POSITION) === 'right') {
+        action.frameOpts.parentFrameKey = windowState.get('activeFrameKey')
+      }
       windowState = windowState.merge(FrameStateUtil.addFrame(windowState.get('frames'), action.frameOpts,
-        nextKey, nextPartitionNumber, action.openInForeground ? nextKey : windowState.get('activeFrameKey')))
+        nextKey, nextPartitionNumber, action.openInForeground ? nextKey : windowState.get('activeFrameKey'), windowState.get('newFrameOffset')))
       if (action.openInForeground) {
         const activeFrame = FrameStateUtil.getActiveFrame(windowState)
         updateTabPageIndex(activeFrame)
@@ -258,7 +261,8 @@ const doAction = (action) => {
     case WindowConstants.WINDOW_SET_ACTIVE_FRAME:
       windowState = windowState.merge({
         activeFrameKey: action.frameProps.get('key'),
-        previewFrameKey: null
+        previewFrameKey: null,
+        newFrameOffset: 0
       })
       updateTabPageIndex(action.frameProps)
       break

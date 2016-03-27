@@ -121,6 +121,13 @@ class TabsTab extends ImmutableComponent {
           value={getSetting(settings.TABS_PER_TAB_PAGE, this.props.settings)}
           onChange={changeSetting.bind(null, this.props.onChangeSetting, settings.TABS_PER_TAB_PAGE)} />
       </SettingItem>
+      <SettingItem dataL10nId='openNewTab'>
+        <select value={getSetting(this.props.settings, settings.NEW_TAB_POSITION)}
+          onChange={changeSetting.bind(null, this.props.onChangeSetting, settings.NEW_TAB_POSITION)}>
+          <option data-l10n-id='toTheRight' value='right'/>
+          <option data-l10n-id='atTheEnd' value='end'/>
+        </select>
+      </SettingItem>
       <SettingCheckbox dataL10nId='switchToNewTabs' prefKey={settings.SWITCH_TO_NEW_TABS} settings={this.props.settings} onChangeSetting={this.props.onChangeSetting}/>
       <SettingCheckbox dataL10nId='paintTabs' prefKey={settings.PAINT_TABS} settings={this.props.settings} onChangeSetting={this.props.onChangeSetting}/>
       <SettingCheckbox dataL10nId='showTabPreviews' prefKey={settings.SHOW_TAB_PREVIEWS} settings={this.props.settings} onChangeSetting={this.props.onChangeSetting}/>

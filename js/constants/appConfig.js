@@ -6,6 +6,7 @@
 const updateHost = process.env.BRAVE_UPDATE_HOST || 'https://brave-laptop-updates.global.ssl.fastly.net'
 const winUpdateHost = process.env.BRAVE_WIN_UPDATE_HOST || 'https://brave-download.global.ssl.fastly.net'
 const crashURL = process.env.BRAVE_CRASH_URL || 'https://laptop-updates.brave.com/1/crashes'
+const settings = require('../constants/settings')
 
 module.exports = {
   name: 'Brave',
@@ -67,20 +68,21 @@ module.exports = {
     winBaseUrl: `${winUpdateHost}/multi-channel/releases/CHANNEL/winx64`
   },
   defaultSettings: {
-    'general.startup-mode': 'lastTime',
-    'general.homepage': 'https://www.brave.com',
-    'general.useragent.value': undefined, // Set at runtime
-    'search.default-search-engine': 'content/search/google.xml',
-    'tabs.switch-to-new-tabs': false,
-    'tabs.paint-tabs': true,
-    'tabs.tabs-per-tab-page': 6,
-    'tabs.show-tab-previews': true,
-    'privacy.history-suggestions': true,
-    'privacy.bookmark-suggestions': true,
-    'privacy.opened-tab-suggestions': true,
-    'privacy.autocomplete.history-size': 500,
-    'bookmarks.toolbar.show': false,
-    'privacy.do-not-track': false,
-    'security.passwords.manager-enabled': true
+    [settings.STARTUP_MODE]: 'lastTime',
+    [settings.HOMEPAGE]: 'https://www.brave.com',
+    [settings.DEFAULT_SEARCH_ENGINE]: './content/search/google.xml',
+    [settings.SWITCH_TO_NEW_TABS]: false,
+    [settings.PAINT_TABS]: true,
+    [settings.NEW_TAB_POSITION]: 'right',
+    [settings.TABS_PER_TAB_PAGE]: 6,
+    [settings.SHOW_TAB_PREVIEWS]: true,
+    [settings.HISTORY_SUGGESTIONS]: true,
+    [settings.BOOKMARK_SUGGESTIONS]: true,
+    [settings.OPENED_TAB_SUGGESTIONS]: true,
+    [settings.AUTOCOMPLETE_HISTORY_SIZE]: 500,
+    [settings.BLOCK_REPORTED_SITES]: false,
+    [settings.SHOW_BOOKMARKS_TOOLBAR]: false,
+    [settings.DO_NOT_TRACK]: false,
+    [settings.PASSWORD_MANAGER_ENABLED]: true
   }
 }

@@ -113,42 +113,10 @@ export function getFeatures (featureStr) {
 }
 
 /**
- * Determines if the specified frame was opened from the specified
- * ancestorFrameKey.
- *
- * For example you may go to google.com and open 3 links in new tabs:
- * G g1 g2 g3
- * Then you may change to g1 and open another tab:
- * G g1 g1.1 g2 g3
- * But then you may go back to google.com and open another tab.
- * It should go like so:
- * G g1 g1.1 g2 g3 g4
- */
-function isAncestorFrameKey (frames, frame, parentFrameKey) {
-  if (!frame || !frame.get('parentFrameKey')) {
-    return false
-  }
-
-  if (frame.get('parentFrameKey') === parentFrameKey) {
-    return true
-  }
-
-  // So there is a parentFrameKey but it isn't the specified one.
-  // Check recursively for each of the parentFrame's ancestors to see
-  // if we have a match.
-  const parentFrameIndex = findIndexForFrameKey(frames, frame.get('parentFrameKey'))
-  const parentFrame = frames.get(parentFrameIndex)
-  if (parentFrameIndex === -1 || !parentFrame.get('parentFrameKey')) {
-    return false
-  }
-  return isAncestorFrameKey(frames, parentFrame, parentFrameKey)
-}
-
-/**
  * Adds a frame specified by frameOpts and newKey and sets the activeFrameKey
  * @return Immutable top level application state ready to merge back in
  */
-export function addFrame (frames, frameOpts, newKey, partitionNumber, activeFrameKey) {
+export function addFrame (frames, frameOpts, newKey, partitionNumber, activeFrameKey, newFrameOffset) {
   const url = frameOpts.location || config.defaultUrl
   const navbarFocus = activeFrameKey === newKey &&
                       url === config.defaultUrl &&
@@ -200,21 +168,22 @@ export function addFrame (frames, frameOpts, newKey, partitionNumber, activeFram
   })
 
   // Find the closest index to the current frame's index which has
-  // a different ancestor frame key.
   let insertionIndex = findIndexForFrameKey(frames, frameOpts.parentFrameKey)
   if (insertionIndex === -1) {
     insertionIndex = frames.size
-  }
-  while (insertionIndex < frames.size) {
-    ++insertionIndex
-    if (!isAncestorFrameKey(frames, frames.get(insertionIndex), frameOpts.parentFrameKey)) {
-      break
+  } else {
+    if (newKey === activeFrameKey) {
+      newFrameOffset = 0
+    } else {
+      newFrameOffset++
     }
+    insertionIndex += newFrameOffset
   }
 
   return {
     frames: frames.splice(insertionIndex, 0, frame),
-    activeFrameKey
+    activeFrameKey,
+    newFrameOffset
   }
 }
 

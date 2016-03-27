@@ -106,6 +106,7 @@ WindowStore
 ```javascript
 {
   activeFrameKey: number,
+  newFrameOffset: number,
   previewFrameKey: number,
   frames: [{
     zoomLevel: number, // current frame zoom level
